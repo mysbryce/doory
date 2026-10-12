@@ -122,7 +122,10 @@ it('runs draft tools then forces a real visual audit back through the provider b
     { plan: { message: 'Verified image and spacing', operations: [] }, actual_tier: 'priority', provider: 'test', model: 'test' },
   ]
   const generate = vi.fn().mockImplementation(async () => outputs.shift())
-  const service = { tools: async () => ({ tools: [{ name: 'capture_canvas' }] }), generate } as unknown as AIService
+  const service = {
+    tools: async () => ({ tools: [{ name: 'capture_canvas' }, { name: 'search_fonts' }] }),
+    generate,
+  } as unknown as AIService
   try {
     const proposal = await runDesignAgent(
       engine,
@@ -132,6 +135,7 @@ it('runs draft tools then forces a real visual audit back through the provider b
       () => {},
     )
     expect(generate).toHaveBeenCalledTimes(3)
+    expect(generate.mock.calls[0][0].tool_results.map((result: { name: string }) => result.name)).toContain('search_fonts')
     expect(generate.mock.calls[2][0].images.length).toBeGreaterThan(0)
     expect(generate.mock.calls[2][0].tool_results.map((result: { name: string }) => result.name)).toEqual([
       'inspect_layout',

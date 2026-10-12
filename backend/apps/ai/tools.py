@@ -40,6 +40,21 @@ TOOL_DEFINITIONS = [
         {"ids": IDS},
     ),
     tool(
+        "search_fonts",
+        "Search installed catalog fonts, your uploaded/shared fonts, bundled faces and device fonts. "
+        "Returns exact family names, categories, installed scripts/subsets, weights and styles. "
+        "No file URLs. "
+        "Use script:thai for Thai; paginate results. Device coverage is unknown, not guaranteed.",
+        {
+            "query": {"type": "string", "maxLength": 100},
+            "script": {"type": "string", "pattern": "^[a-z]+(?:-[a-z]+)?$", "maxLength": 32},
+            "category": {"enum": ["sans-serif", "serif", "display", "handwriting", "monospace"]},
+            "source": {"enum": ["all", "catalog", "custom", "bundled", "system"]},
+            "page": {"type": "integer", "minimum": 1, "maximum": 200},
+            "page_size": {"type": "integer", "minimum": 1, "maximum": 40},
+        },
+    ),
+    tool(
         "get_motion_catalog",
         "List all registered animation/transition presets, directions, defaults and text units. "
         "Use exact catalog ids.",
@@ -85,6 +100,11 @@ Request tools with ONLY JSON {"message":"brief progress",
 "tool_calls":[{"id":"unique-call-id","name":"tool name","arguments":{...}}]}.
 Use up to 8 calls per turn. Results arrive in the next user message. Inspect canvas before editing.
 Measure gaps/alignment and inspect styles. Look at capture_canvas after edits.
+Use search_fonts before choosing typography. Discover custom fonts instead of guessing their names.
+Choose exact family names and installed weights/styles from results. Match the text's script, e.g.
+script:thai for Thai. Declared scripts without installed subsets do not prove usable coverage.
+Device-font coverage and exact glyph coverage are unknown; never promise support based on a fallback.
+If no suitable font exists, report the limitation and ask for a font upload or catalog installation.
 Never claim you saw an image unless attached or read through read_design_snapshot.
 Use get_motion_catalog before setting animations or
 transitions. Inspect motion and capture_motion after motion edits. Revise issues, then return final JSON

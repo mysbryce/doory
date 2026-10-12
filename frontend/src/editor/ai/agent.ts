@@ -45,11 +45,13 @@ export async function runDesignAgent(
     if (!definitions.tools.some((tool) => tool.name === 'capture_canvas'))
       throw new Error('AI design tools are unavailable on this server.')
     toolResults = await execute(
-      ['get_canvas', 'inspect_layout', 'inspect_styles', 'inspect_motion'].map((name, index) => ({
-        id: `baseline-${index}`,
-        name: name as AIToolCall['name'],
-        arguments: {},
-      })),
+      ['get_canvas', 'inspect_layout', 'inspect_styles', 'inspect_motion', 'search_fonts']
+        .filter((name) => name !== 'search_fonts' || definitions.tools.some((tool) => tool.name === name))
+        .map((name, index) => ({
+          id: `baseline-${index}`,
+          name: name as AIToolCall['name'],
+          arguments: {},
+        })),
     )
   }
   for (let turn = 0; turn < MAX_AGENT_TURNS; turn++) {

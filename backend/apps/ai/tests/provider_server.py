@@ -37,6 +37,11 @@ class ProviderHandler(BaseHTTPRequestHandler):
                 "operations": [],
             }
         elif not canvas["objects"]:
+            fonts = next((result["result"] for result in results if result["name"] == "search_fonts"), None)
+            if not fonts or not any(font["family"] == "Inter" for font in fonts["local"]["fonts"]):
+                return self.answer({"error": "Expected real font-discovery evidence before design"}, 400)
+            if "/media/" in json.dumps(fonts):
+                return self.answer({"error": "Private font URLs must not reach the provider"}, 400)
             operations = [
                 {
                     "op": "background_style",

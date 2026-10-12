@@ -154,6 +154,7 @@ HTML/SVG, filesystem commands or mutate the live canvas through this protocol.
 | `get_canvas` | Active draft layers, dimensions, selection, styles and motion |
 | `inspect_layout` | Actual Fabric bounds; gaps, edge/center alignment, overlap, margins, clipping, textbox overflow |
 | `inspect_styles` | Typography, palette, stroke, effects; raster-sampled text contrast with explicit approximation |
+| `search_fonts` | Installed public catalog, own uploaded/shared fonts, bundled faces and device fonts; name/category/script/source filters, pagination, weights and styles without font URLs |
 | `get_motion_catalog` | Every registered enter/exit, emphasis and page transition preset, defaults and directions |
 | `inspect_motion` | Timeline spans, delays, loops, duration, overlap and unknown-preset issues |
 | `capture_canvas` | Real export-pipeline image; optional animation timestamp |
@@ -166,6 +167,18 @@ produce animation filmstrips; page transitions use the previous page and actual 
 The model can revise issues through another tool round. A preview rendering failure prevents a final
 proposal. A tool error is supplied to the model explicitly; it must not claim that failed check succeeded.
 Contrast estimates and overlaps are observations, not automatic accessibility or design verdicts.
+
+Font discovery runs before the first design turn and can be called again by every API/CLI model. Use
+`{"script":"thai"}` for Thai typography or `{"source":"custom"}` for the editor's own uploaded/shared
+library. Bundled coverage/weight ranges come from the installed Fontsource packages; advertised styles
+match the CSS the application imports. Catalog coverage distinguishes declared scripts from installed,
+loadable subset files, including per-weight/style coverage. Uploaded coverage uses inspected font metadata.
+Device font scripts/weights/styles are unknown; no complete glyph guarantee is made. Custom faces retain
+precedence when they share a bundled family name. Discovery does not install fonts or expose file URLs,
+owner IDs or library IDs. Family names and capability metadata are sent to the selected provider.
+Empty Thai results mean a suitable catalog font must be installed or a custom font uploaded; fallback
+rendering must not be presented as verified Thai coverage. The source remains Fontsource, not Google's
+direct Web Fonts API.
 
 Native multimodal API formats deliver screenshot bytes. Codex streaming receives native app-server image
 inputs (the non-streaming adapter uses `--image`), Claude/CodeBuddy/Qoder

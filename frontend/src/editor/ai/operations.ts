@@ -40,8 +40,9 @@ const fields = [
 const types = new Set(['rect', 'ellipse', 'triangle', 'textbox'])
 const color = /^(#(?:[\da-fA-F]{3}|[\da-fA-F]{4}|[\da-fA-F]{6}|[\da-fA-F]{8})|transparent|none)$/
 
-function designFont(value: unknown): string {
+function designFont(value: unknown, customFamilies: readonly string[]): string {
   const name = primaryFamily(typeof value === 'string' ? value : 'Inter')
+  if (customFamilies.some((family) => family.toLowerCase() === name.toLowerCase())) return fontStack(name, undefined)
   const bundled: Record<string, 'sans-serif' | 'serif' | 'handwriting'> = {
     Inter: 'sans-serif',
     Nunito: 'sans-serif',
@@ -96,7 +97,7 @@ function checkProps(props: Record<string, unknown>): void {
 }
 
 /** Pure atomic page edit. Fresh ids; preserve other pages, locked layers, background metadata and history. */
-export function applyPlan(doc: DoryDocument, pageId: string, plan: AIPlan): DoryDocument {
+export function applyPlan(doc: DoryDocument, pageId: string, plan: AIPlan, customFamilies: readonly string[] = []): DoryDocument {
   const page = doc.pages.find((entry) => entry.id === pageId)
   if (!page) throw new Error('The source page no longer exists.')
   if (!Array.isArray(plan.operations) || plan.operations.length > 100) throw new Error('AI returned too many edits.')
@@ -119,7 +120,7 @@ export function applyPlan(doc: DoryDocument, pageId: string, plan: AIPlan): Dory
         object.ry = Number(props.height) / 2
       }
       if (type === 'textbox') {
-        object.fontFamily = designFont(object.fontFamily)
+        object.fontFamily = designFont(object.fontFamily, customFamilies)
         object.fontSize ??= 32
         object.fontWeight ??= 400
       }
@@ -131,7 +132,7 @@ export function applyPlan(doc: DoryDocument, pageId: string, plan: AIPlan): Dory
       else {
         checkProps(operation.props)
         const edited = { ...target, ...operation.props }
-        if (operation.props.fontFamily !== undefined) edited.fontFamily = designFont(operation.props.fontFamily)
+        if (operation.props.fontFamily !== undefined) edited.fontFamily = designFont(operation.props.fontFamily, customFamilies)
         if (target.type === 'ellipse') {
           if (operation.props.width !== undefined) edited.rx = Number(operation.props.width) / 2
           if (operation.props.height !== undefined) edited.ry = Number(operation.props.height) / 2

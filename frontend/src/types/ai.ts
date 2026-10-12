@@ -69,6 +69,7 @@ export interface AIToolCall {
     | 'get_canvas'
     | 'inspect_layout'
     | 'inspect_styles'
+    | 'search_fonts'
     | 'get_motion_catalog'
     | 'inspect_motion'
     | 'capture_canvas'

@@ -35,6 +35,7 @@ def test_tool_registry_covers_visual_layout_styling_and_all_motion_boundaries():
         "get_canvas",
         "inspect_layout",
         "inspect_styles",
+        "search_fonts",
         "get_motion_catalog",
         "inspect_motion",
         "capture_canvas",
@@ -49,6 +50,9 @@ def test_tool_registry_covers_visual_layout_styling_and_all_motion_boundaries():
         {"id": "x", "name": "run_shell", "arguments": {"command": "anything"}},
         {"id": "x", "name": "capture_canvas", "arguments": {"time_ms": -1}},
         {"id": "x", "name": "inspect_layout", "arguments": {"ids": "all"}},
+        {"id": "x", "name": "search_fonts", "arguments": {"page_size": 1000}},
+        {"id": "x", "name": "search_fonts", "arguments": {"script": "thai&owner=another-user"}},
+        {"id": "x", "name": "search_fonts", "arguments": {"url": "http://private-endpoint"}},
         {"id": "x", "name": "apply_design", "arguments": {"operations": [{"op": "delete", "id": "missing"}]}},
     ],
 )
@@ -167,3 +171,23 @@ def test_snapshot_mcp_serves_images_and_exposes_no_filesystem_or_mutation_tools(
     assert responses[0]["result"]["protocolVersion"] == "2025-03-26"
     assert [tool["name"] for tool in responses[1]["result"]["tools"]] == ["read_design_snapshot"]
     assert responses[2]["result"]["content"][1]["type"] == "image"
+
+
+def test_font_discovery_tool_accepts_bounded_language_and_custom_library_filters():
+    envelope = {
+        "message": "Find Thai typography",
+        "tool_calls": [
+            {
+                "id": "fonts",
+                "name": "search_fonts",
+                "arguments": {
+                    "script": "thai",
+                    "source": "custom",
+                    "category": "sans-serif",
+                    "page": 2,
+                    "page_size": 20,
+                },
+            }
+        ],
+    }
+    assert parse_agent_response(json.dumps(envelope), CONTEXT)["tool_calls"] == envelope["tool_calls"]

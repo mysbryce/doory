@@ -31,7 +31,7 @@ export const aiStrings = {
   stale: 'Canvas changed since this proposal. Generate again to keep your latest edits.',
   preview: 'Proposed canvas',
   pending: 'Review proposal before applying it.',
-  privacy: 'Your prompt and active page content are sent to the selected provider.',
+  privacy: 'Your prompt, page previews and available font names are sent to the selected provider.',
   clear: 'Clear conversation',
   history: 'AI conversation',
   actualTier: (tier: string) => `Provider reported tier: ${tier}`,

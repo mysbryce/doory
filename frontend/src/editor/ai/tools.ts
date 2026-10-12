@@ -11,6 +11,7 @@ import { emphasisPresets, inOutPresets, transitionPresets } from '../animation/p
 import { sampleTransition } from '../animation/sampler'
 import { drawTransition } from '../animation/transitionRenderer'
 import { applyPlan, pageContext } from './operations'
+import { searchFonts } from './fonts'
 
 export interface Draft {
   doc: DoryDocument
@@ -303,6 +304,9 @@ export async function executeDesignTool(
     case 'inspect_styles':
       result = await inspectStyles(editor, draft, args.ids)
       break
+    case 'search_fonts':
+      result = await searchFonts(editor, args, signal)
+      break
     case 'get_motion_catalog':
       result = {
         enterExit: inOutPresets.list().map(({ id, label, defaults, directions, textUnits, textDefault }) => ({
@@ -349,7 +353,14 @@ export async function executeDesignTool(
       break
     case 'apply_design': {
       const operations = args.operations as AIPlan['operations']
-      const next = applyPlan(draft.doc, page.id, { message: '', operations })
+      await editor.userFonts.ensureLoaded()
+      signal.throwIfAborted()
+      const next = applyPlan(
+        draft.doc,
+        page.id,
+        { message: '', operations },
+        editor.userFonts.getSnapshot().families.map(({ family }) => family),
+      )
       signal.throwIfAborted()
       draft.doc = next
       draft.operations.push(...operations)
