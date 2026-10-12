@@ -19,6 +19,7 @@ const BrandPanel = loadable(() => import('../panels/BrandPanel').then((m) => m.B
 const AnimatePanel = loadable(() => import('../panels/AnimatePanel').then((m) => m.AnimatePanel))
 const AudioPanel = loadable(() => import('../panels/AudioPanel').then((m) => m.AudioPanel))
 const CommentsPanel = loadable(() => import('../panels/CommentsPanel').then((m) => m.CommentsPanel))
+const AIPanel = loadable(() => import('../ai/AIPanel').then((m) => m.AIPanel))
 
 /**
  * The tools of the top bar: Text, Sticker, Image and Shapes first, then the rest. Text, Image, Shapes and Background open as drawers under their button;
@@ -26,6 +27,7 @@ const CommentsPanel = loadable(() => import('../panels/CommentsPanel').then((m) 
  */
 export function registerBuiltinPanels(): void {
   const editable = ({ state }: { state: { readOnly: boolean } }): boolean => !state.readOnly
+  registerPanel({ id: 'ai', label: 'AI designer', icon: <Sparkles size={18} aria-hidden="true" />, order: 5, placement: 'sidebar', component: AIPanel, preload: AIPanel.preload, requires: ({ editor, state }) => !state.readOnly && !!editor.adapter.services.ai })
   registerPanel({ id: 'text', label: t.rail.text, icon: I.text, order: 10, placement: 'drawer', component: TextDrawer, requires: editable, shortcut: 'T' })
   registerPanel({ id: 'elements', label: t.rail.elements, title: t.stickers.title, icon: I.sticker, order: 20, placement: 'sidebar', component: StickerPanel, requires: editable })
   registerPanel({ id: 'image', label: t.rail.image, icon: I.image, order: 30, placement: 'drawer', component: ImageDrawer, requires: editable })

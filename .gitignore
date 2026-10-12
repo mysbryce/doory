@@ -21,6 +21,10 @@ htmlcov/
 
 # Node
 node_modules/
+.npm-cache/
+.codex-ai-protocol/
+# Local AI preview/export verification artifacts
+/artifacts/
 frontend/dist/
 frontend/playwright-report/
 frontend/test-results/

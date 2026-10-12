@@ -1,6 +1,7 @@
 import { assetsApi, authApi, brandApi, commentsApi, designsApi, elementsApi, fontsApi, shareApi, stockApi, templatesApi } from '@/lib/api'
 import type { Asset, BrandKit, BrandKitInput, Page } from '@/types/api'
 import type { AssetRef, CommentViewer, EditorServices, UserFontsService } from '@/types/adapter'
+import { aiApi } from '@/lib/api/ai'
 
 /**
  * Tells the comments who is looking (`GET /auth/me/`). The answer is kept once there is one; a visitor who is not
@@ -20,11 +21,12 @@ export function assetToRef(asset: Asset): AssetRef {
   return { id: asset.id, url: asset.url, thumbUrl: asset.thumb_url, width: asset.width, height: asset.height, name: asset.name, kind: asset.kind }
 }
 
-type PublicServices = Pick<EditorServices, 'fonts' | 'elements' | 'templates'>
+type PublicServices = Pick<EditorServices, 'fonts' | 'elements' | 'templates' | 'ai'>
 
 /** Catalog endpoints that need no login. */
 export function createPublicServices(): PublicServices {
   return {
+    ai: aiApi,
     fonts: { list: (query) => fontsApi.list(query) },
     elements: { packs: () => elementsApi.packs(), list: (query) => elementsApi.list(query) },
     templates: {

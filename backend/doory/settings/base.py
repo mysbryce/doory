@@ -13,6 +13,10 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-insecure-secret-key-change-me
 # Previous keys still accepted for verification, so a key can be rotated without signing everyone out.
 SECRET_KEY_FALLBACKS = env.list("DJANGO_SECRET_KEY_FALLBACKS", default=[])
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
+DOORY_SELF_HOSTED = env.bool("DOORY_SELF_HOSTED", default=False)
+# Administrator-owned endpoints, credentials and model capabilities. Never supplied by browser code.
+AI_PROVIDERS = env.json("DOORY_AI_PROVIDERS", default={})
+AI_REQUEST_TIMEOUT = min(100, max(5, env.int("DOORY_AI_TIMEOUT", default=90)))
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 SITE_URL = env("SITE_URL", default="http://localhost:5173")
 
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     "apps.sharing",
     "apps.exports",
     "apps.collab",
+    "apps.ai",
 ]
 
 MIDDLEWARE = [

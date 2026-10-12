@@ -31,6 +31,7 @@ import type {
   VersionSummary,
 } from './api'
 import type { DoryDocument } from './document'
+import type { AIService } from './ai'
 
 export type EditorMode = 'guest' | 'account' | 'shared-view' | 'shared-comment' | 'shared-edit'
 
@@ -99,6 +100,8 @@ export interface CommentViewer {
 }
 
 export interface EditorServices {
+  /** Optional design assistant. The shell owns provider HTTP/auth; the editor receives typed proposals. */
+  ai?: AIService | null
   fonts: {
     list(q: FontQuery): Promise<Page<FontFamily>>
     /** The user's uploaded fonts; `null` or absent for guests and shared-link visitors, who cannot upload. */

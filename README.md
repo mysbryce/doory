@@ -118,6 +118,7 @@ can run the whole thing on your own server.**
 | **Present** | Present mode with speaker notes, timing, auto-advance, a laser pointer and a second presenter window |
 | **Together** | Share links that can view, comment or edit (optionally password protected), pinned comments, version history and real-time co-editing with live cursors |
 | **Brand** | Brand kits with your colours, fonts and logos, one click away in every design |
+| **AI designer** | Prompt to editable graphics, model/provider connections, draft previews, spacing/style checks and motion tools; CLI providers only on explicitly enabled self-hosted installations. See [setup](docs/ai-assistant.md) |
 | **Export** | PNG, JPG, SVG and PDF, MP4, WebM and animated GIF, all made in the browser, plus print-ready PDF with bleed and crop marks |
 
 </details>

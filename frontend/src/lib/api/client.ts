@@ -231,6 +231,8 @@ async function parse<T>(response: Response): Promise<T> {
 }
 
 export const http = {
+  /** NDJSON response; uses the same CSRF/session/error handling as every JSON request. */
+  postStream: (path: string, options: RequestOptions = {}): Promise<Response> => send('POST', path, { ...options, accept: 'application/x-ndjson, application/json' }),
   get: async <T>(path: string, options: RequestOptions = {}): Promise<T> => parse<T>(await send('GET', path, options)),
   post: async <T>(path: string, options: RequestOptions = {}): Promise<T> => parse<T>(await send('POST', path, options)),
   put: async <T>(path: string, options: RequestOptions = {}): Promise<T> => parse<T>(await send('PUT', path, options)),
