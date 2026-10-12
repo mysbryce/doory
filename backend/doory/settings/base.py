@@ -205,12 +205,13 @@ SPECTACULAR_SETTINGS = {
     # The Swagger page loads its script from a CDN; pin the release instead of following `latest`.
     "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14",
     "SWAGGER_UI_FAVICON_HREF": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/favicon-32x32.png",
-    # Several apps have a field called `kind` or `role` with different choices; name each set.
+    # Several apps use `kind`, `role` or `provider` with different choices; name each set.
     "ENUM_NAME_OVERRIDES": {
         "AssetKindEnum": "apps.assets.models.Asset.Kind",
         "ElementKindEnum": "apps.elements.models.ElementKind",
         "ShareRoleEnum": "apps.sharing.models.ShareRole",
         "BrandFontRoleEnum": "apps.brand.serializers.FONT_ROLES",
+        "AIProviderEnum": "apps.ai.catalog.BY_ID",
     },
 }
 

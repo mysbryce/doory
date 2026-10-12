@@ -37,13 +37,13 @@ memory; a few corrections are recorded with the evidence in `exceptions.json`.
 
 ## Result
 
-Read from 466 npm packages (the per-platform binaries of esbuild, rollup and similar count once per family) and 81 Python packages (see [licenses/DEPENDENCIES.md](licenses/DEPENDENCIES.md)):
+Read from 563 npm packages (the per-platform binaries of esbuild, rollup and similar count once per family) and 83 Python packages (see [licenses/DEPENDENCIES.md](licenses/DEPENDENCIES.md)):
 
-* **Shipped to browsers (45 npm packages):** MIT, ISC, Apache-2.0, BSD-3-Clause and OFL-1.1, plus three
+* **Shipped to browsers (115 npm packages):** MIT, ISC, Apache-2.0, BSD-3-Clause and OFL-1.1, plus three
   licence choices resolved below (DOMPurify, rgbcolor, pako). Nothing copyleft.
-* **Server runtime (57 Python packages):** permissive, except `psycopg2-binary` (LGPL-3.0-or-later, the PostgreSQL
+* **Server runtime (58 Python packages):** permissive, except `psycopg2-binary` (LGPL-3.0-or-later, the PostgreSQL
   driver) and `certifi` (MPL-2.0, the CA list). Both are accepted with the reasons below.
-* **Development and tests only (421 npm, 24 Python packages):** permissive, except `axe-core` and
+* **Development and tests only (448 npm, 25 Python packages):** permissive, except `axe-core` and
   `@axe-core/playwright` (MPL-2.0), `hypothesis` (MPL-2.0) and `caniuse-lite` (CC-BY-4.0), none of which is
   shipped or redistributed.
 
@@ -98,7 +98,9 @@ the three small libraries behind the video and GIF export; the type declarations
 | [`qrcode`](https://github.com/soldair/node-qrcode) | `^1.5.4` | 1.5.4 | MIT | QR code objects (lazy-loaded) |
 | [`react`](https://github.com/react/react) | `^19.2.0` | 19.3.0 | MIT | UI library |
 | [`react-dom`](https://github.com/react/react) | `^19.2.0` | 19.3.0 | MIT | UI renderer |
+| [`react-markdown`](https://github.com/remarkjs/react-markdown) | `^10.1.0` | 10.1.0 | MIT | renders AI chat answers as safe Markdown without executable HTML or remote image embeds |
 | [`react-router-dom`](https://github.com/remix-run/react-router) | `^7.13.0` | 7.18.4 | MIT | routing of the app shell |
+| [`remark-gfm`](https://github.com/remarkjs/remark-gfm) | `^4.0.1` | 4.0.1 | MIT | GitHub-flavored Markdown tables and lists in the AI chat sidebar |
 | [`webm-muxer`](https://github.com/Vanilagy/webm-muxer) | `^5.1.4` | 5.1.4 | MIT | writes the WebM file of the video export (lazy-loaded, 7 kB gzipped); same deprecation note as `mp4-muxer` |
 | [`y-protocols`](https://github.com/yjs/y-protocols) | `^1.0.7` | 1.0.7 | MIT | Yjs sync and awareness wire protocol |
 | [`yjs`](https://github.com/yjs/yjs) | `^13.6.33` | 13.6.33 | MIT | CRDT document of real-time co-editing |
@@ -108,7 +110,7 @@ the three small libraries behind the video and GIF export; the type declarations
 
 | Package | Range | Locked | Licence (SPDX) | Use |
 |---|---|---|---|---|
-| [`boto3`](https://github.com/boto/boto3) | `>=1.35` | 1.43.109 | Apache-2.0 | S3-compatible object storage client (used when `USE_S3` is set) |
+| [`boto3`](https://github.com/boto/boto3) | `>=1.35` | 1.43.111 | Apache-2.0 | S3-compatible object storage client (used when `USE_S3` is set) |
 | [`brotli`](https://github.com/google/brotli) | `>=1.1` | 1.2.0 | MIT | Brotli codec that fontTools needs to read and write woff2 fonts |
 | [`channels`](http://github.com/django/channels) | `>=4.2,<5` | 4.3.2 | BSD-3-Clause | ASGI and WebSocket layer of real-time co-editing |
 | [`channels_redis`](http://github.com/django/channels_redis/) | `>=4.2` | 4.3.0 | BSD-3-Clause | shared channel layer for several real-time workers (with `redis-py`, MIT) |
@@ -124,11 +126,12 @@ the three small libraries behind the video and GIF export; the type declarations
 | [`fonttools`](http://github.com/fonttools/fonttools) | `>=4.50` | 4.66.1 | MIT | inspects uploaded and downloaded font files |
 | [`google-auth`](https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth) | `>=2.38` | 2.61.0 | Apache-2.0 | verifies Google sign-in tokens |
 | [`gunicorn`](https://github.com/benoitc/gunicorn) | `>=23` | 26.2.0 | MIT | production WSGI server of the API |
+| [`jsonschema`](https://github.com/python-jsonschema/jsonschema) | `>=4.26` | 4.26.0 | MIT | validates bounded AI design-tool arguments before execution on the editor draft |
 | [`pillow`](https://github.com/python-pillow/Pillow) | `>=11` | 12.3.0 | MIT-CMU | validates uploaded raster images and makes thumbnails (the wheel bundles libjpeg-turbo, libpng, zlib, FreeType, HarfBuzz, LittleCMS, OpenJPEG, libwebp, libtiff; their notices are in the wheel) |
 | [`playwright`](https://github.com/Microsoft/playwright-python) | `>=1.50` | 1.63.0 | Apache-2.0 | drives headless Chromium for server-side print PDF export. The wheel bundles Playwright's Node.js driver (MIT; its dependencies' notices are in `driver/package/ThirdPartyNotices.txt`); the browser itself is downloaded by `playwright install` only when `INSTALL_CHROMIUM=true`, see the decisions above |
 | [`psycopg2-binary`](https://psycopg.org/) | `>=2.9` | 2.9.13 | LGPL-3.0-or-later | PostgreSQL driver of Django (the wheel bundles libpq, PostgreSQL licence, and OpenSSL, Apache-2.0) |
 | [`pycrdt`](https://github.com/y-crdt/pycrdt) | `>=0.14,<0.15` | 0.14.8 | MIT | Yjs-compatible CRDT, bindings to the Rust `yrs` engine (real-time co-editing) |
-| [`pypdf`](https://github.com/py-pdf/pypdf) | `>=5` | 6.19.0 | BSD-3-Clause | writes the TrimBox/BleedBox, `/Lang` and `/Creator` of the PDF Chromium printed; page content is copied unchanged |
+| [`pypdf`](https://github.com/py-pdf/pypdf) | `>=5` | 6.20.0 | BSD-3-Clause | writes the TrimBox/BleedBox, `/Lang` and `/Creator` of the PDF Chromium printed; page content is copied unchanged |
 | [`requests`](https://github.com/psf/requests) | `>=2.32` | 2.34.2 | Apache-2.0 | outbound HTTP: font, element pack, model and audio pack downloads, stock photo search |
 | [`uvicorn`](https://github.com/Kludex/uvicorn) | `>=0.30` | 0.54.0 | BSD-3-Clause | production ASGI server of the real-time service |
 | [`websockets`](https://github.com/python-websockets/websockets) | `>=13` | 17.2 | BSD-3-Clause | WebSocket protocol implementation used by uvicorn |
@@ -169,10 +172,10 @@ the three small libraries behind the video and GIF export; the type declarations
 |---|---|---|---|---|
 | [`daphne`](https://github.com/django/daphne) | `>=4.1` | 4.2.3 | BSD-3-Clause | ASGI development server (not installed in the production image) |
 | [`factory_boy`](https://github.com/FactoryBoy/factory_boy) | `>=3.3` | 3.3.3 | MIT | test data factories |
-| [`hypothesis`](https://github.com/HypothesisWorks/hypothesis) | `>=6.100` | 6.168.5 | MPL-2.0 | property-based tests; never installed in the production image or redistributed with the product |
+| [`hypothesis`](https://github.com/HypothesisWorks/hypothesis) | `>=6.100` | 6.169.0 | MPL-2.0 | property-based tests; never installed in the production image or redistributed with the product |
 | [`pytest`](https://github.com/pytest-dev/pytest) | `>=8` | 9.1.1 | MIT | test runner |
 | [`pytest-django`](https://github.com/pytest-dev/pytest-django) | `>=4.9` | 4.14.0 | BSD-3-Clause | Django integration of pytest |
-| [`ruff`](https://github.com/astral-sh/ruff) | `>=0.8` | 0.16.10 | MIT | linter and formatter |
+| [`ruff`](https://github.com/astral-sh/ruff) | `>=0.8` | 0.17.0 | MIT | linter and formatter |
 
 <!-- END direct-dependencies -->
 

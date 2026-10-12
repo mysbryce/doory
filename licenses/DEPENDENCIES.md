@@ -6,16 +6,16 @@ Every direct and transitive npm and Python dependency with the licence its own m
 installed packages (see the header of `licenses/audit.py` for the sources). The curated view with the decisions
 is [THIRD_PARTY.md](../THIRD_PARTY.md); reproduce this file with `python licenses/audit.py --write`.
 
-<!-- signature: d9fe30b80c873bc4 -->
+<!-- signature: 6271d9c7dd470212 -->
 
 ## Summary
 
 | Ecosystem and scope | Packages | Licences |
 |---|---:|---|
-| npm packages shipped to browsers (production bundle, fonts, WebAssembly) | 45 | MIT 32, OFL-1.1 5, Apache-2.0 2, ISC 2, (MIT AND Zlib) 1, (MPL-2.0 OR Apache-2.0) 1, BSD-3-Clause 1, MIT OR SEE LICENSE IN FEEL-FREE.md 1 |
-| npm packages for building, testing and development (never shipped) | 421 | MIT 333, ISC 33, Apache-2.0 24, BSD-3-Clause 14, BSD-2-Clause 8, MPL-2.0 2, (BSD-2-Clause OR MIT OR Apache-2.0) 1, (MIT OR CC0-1.0) 1, (MIT OR WTFPL) 1, BlueOak-1.0.0 1, CC-BY-4.0 1, MIT-0 1, Python-2.0 1 |
-| Python packages of the server runtime (`requirements.txt`) | 57 | MIT 23, BSD-3-Clause 15, Apache-2.0 7, BSD-2-Clause 2, BSD-3-Clause OR Apache-2.0 2, PSF-2.0 2, Apache-2.0 OR BSD-3-Clause 1, LGPL-3.0-or-later 1, MIT AND PSF-2.0 1, MIT-0 1, MIT-CMU 1, MPL-2.0 1 |
-| Python packages for development and tests only (`requirements-dev.txt`) | 24 | MIT 15, Apache-2.0 2, BSD-3-Clause 2, Apache-2.0 OR BSD-2-Clause 1, BSD-2-Clause 1, BSD-3-Clause AND TCL 1, MPL-2.0 1, ZPL-2.1 1 |
+| npm packages shipped to browsers (production bundle, fonts, WebAssembly) | 115 | MIT 101, OFL-1.1 5, ISC 3, Apache-2.0 2, (MIT AND Zlib) 1, (MPL-2.0 OR Apache-2.0) 1, BSD-3-Clause 1, MIT OR SEE LICENSE IN FEEL-FREE.md 1 |
+| npm packages for building, testing and development (never shipped) | 448 | MIT 360, ISC 33, Apache-2.0 24, BSD-3-Clause 14, BSD-2-Clause 8, MPL-2.0 2, (BSD-2-Clause OR MIT OR Apache-2.0) 1, (MIT OR CC0-1.0) 1, (MIT OR WTFPL) 1, BlueOak-1.0.0 1, CC-BY-4.0 1, MIT-0 1, Python-2.0 1 |
+| Python packages of the server runtime (`requirements.txt`) | 58 | MIT 23, BSD-3-Clause 15, Apache-2.0 8, BSD-2-Clause 2, BSD-3-Clause OR Apache-2.0 2, PSF-2.0 2, Apache-2.0 OR BSD-3-Clause 1, LGPL-3.0-or-later 1, MIT AND PSF-2.0 1, MIT-0 1, MIT-CMU 1, MPL-2.0 1 |
+| Python packages for development and tests only (`requirements-dev.txt`) | 25 | MIT 15, BSD-3-Clause 3, Apache-2.0 2, Apache-2.0 OR BSD-2-Clause 1, BSD-2-Clause 1, BSD-3-Clause AND TCL 1, MPL-2.0 1, ZPL-2.1 1 |
 
 ## Items that are not plain permissive
 
@@ -25,7 +25,7 @@ is [THIRD_PARTY.md](../THIRD_PARTY.md); reproduce this file with `python license
 | `axe-core` 4.13.0 | MPL-2.0 | npm, build/test only | accept, dev/test only: MPL-2.0 is file-level copyleft. The package is only loaded by the accessibility checks of the end-to-end suite (frontend/e2e/app/a11y.spec.ts); it is not in the production bundle (verified from the build's source maps), is used unmodified and is not redistributed. |
 | `caniuse-lite` 1.0.30001814 | CC-BY-4.0 | npm, build/test only | accept, build tooling only: Data licensed CC-BY-4.0 (attribution), read by Babel/browserslist while building. Nothing of it is in the production bundle (verified from the build's source maps) or in any image, so no attribution obligation arises from distribution; dropping it is not possible without dropping the Vite React plugin. |
 | `certifi` 2026.7.22 | MPL-2.0 | Python, server runtime | accept: MPL-2.0 covers only the CA certificate list, which is data. It is installed unmodified from PyPI (a dependency of requests), so the MPL source-availability duty is met by PyPI and the upstream repository; copyleft does not reach Doory's code. |
-| `hypothesis` 6.168.5 | MPL-2.0 | Python, dev/test only | accept, dev/test only: MPL-2.0, used unmodified by the property-based tests. It is only in requirements-dev.txt, which the Dockerfile does not install, so it is neither in the image nor redistributed. |
+| `hypothesis` 6.169.0 | MPL-2.0 | Python, dev/test only | accept, dev/test only: MPL-2.0, used unmodified by the property-based tests. It is only in requirements-dev.txt, which the Dockerfile does not install, so it is neither in the image nor redistributed. |
 | `psycopg2-binary` 2.9.13 | LGPL-3.0-or-later | Python, server runtime | accept, with conditions: LGPL-3.0-or-later (with an OpenSSL linking exception), the PostgreSQL driver Django uses. It stays a separate library: installed unmodified from PyPI by pip, imported dynamically, never vendored or patched, so Doory itself remains MIT; an operator can replace it with another build (pip install). psycopg 3 is LGPL-3.0 too and Django has no permissive PostgreSQL driver, so a swap would not help. Condition: never copy its code into this repository. |
 
 Packages offering a choice of licences where Doory uses the permissive one:
@@ -45,39 +45,109 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@fontsource-variable/plus-jakarta-sans` | 5.3.0 | `^5.3.0` | OFL-1.1 | https://github.com/fontsource/font-files |
 | `@tanstack/query-core` | 5.104.1 |  | MIT | https://github.com/TanStack/query |
 | `@tanstack/react-query` | 5.104.1 | `^5.62.0` | MIT | https://github.com/TanStack/query |
+| `@ungap/structured-clone` | 1.4.0 |  | ISC | https://github.com/ungap/structured-clone |
+| `bail` | 2.0.2 |  | MIT | https://github.com/wooorm/bail |
 | `canvg` | 3.0.11 |  | MIT | https://github.com/canvg/canvg |
+| `ccount` | 2.0.1 |  | MIT | https://github.com/wooorm/ccount |
+| `comma-separated-tokens` | 2.0.3 |  | MIT | https://github.com/wooorm/comma-separated-tokens |
 | `core-js` | 3.50.0 |  | MIT | https://github.com/zloirock/core-js |
+| `decode-named-character-reference` | 1.3.0 |  | MIT | https://github.com/wooorm/decode-named-character-reference |
 | `dijkstrajs` | 1.0.3 |  | MIT | https://github.com/tcort/dijkstrajs |
 | `dompurify` | 3.4.16 |  | (MPL-2.0 OR Apache-2.0) | https://github.com/cure53/DOMPurify |
+| `escape-string-regexp` | 5.0.0 |  | MIT | https://github.com/sindresorhus/escape-string-regexp |
+| `estree-util-is-identifier-name` | 3.0.0 |  | MIT | https://github.com/syntax-tree/estree-util-is-identifier-name |
+| `extend` | 3.0.2 |  | MIT | https://github.com/justmoon/node-extend |
 | `fabric` | 7.4.0 | `^7.2.0` | MIT | https://github.com/fabricjs/fabric.js |
 | `fast-png` | 6.4.0 |  | MIT | https://github.com/image-js/fast-png |
 | `fflate` | 0.8.3 | `^0.8.3` | MIT | https://github.com/101arrowz/fflate |
 | `flatbuffers` | 25.9.23 |  | Apache-2.0 | https://github.com/google/flatbuffers |
 | `gifenc` | 1.0.3 | `^1.0.3` | MIT | https://github.com/mattdesl/gifenc |
 | `guid-typescript` | 1.0.9 |  | ISC | https://github.com/NicolasDeveloper/guid-typescript |
+| `hast-util-to-jsx-runtime` | 2.3.6 |  | MIT | https://github.com/syntax-tree/hast-util-to-jsx-runtime |
+| `hast-util-whitespace` | 3.0.0 |  | MIT | https://github.com/syntax-tree/hast-util-whitespace |
+| `html-url-attributes` | 3.0.1 |  | MIT | https://github.com/rehypejs/rehype-minify/tree/main/packages/html-url-attributes |
 | `html2canvas` | 1.4.1 |  | MIT | https://github.com/niklasvh/html2canvas |
+| `inline-style-parser` | 0.2.7 |  | MIT | https://github.com/remarkablemark/inline-style-parser |
 | `iobuffer` | 5.4.0 |  | MIT | https://github.com/image-js/iobuffer |
+| `is-plain-obj` | 4.1.0 |  | MIT | https://github.com/sindresorhus/is-plain-obj |
 | `jspdf` | 4.2.1 | `^4.2.1` | MIT | https://github.com/parallax/jsPDF |
 | `lib0` | 0.2.119 | `^0.2.119` | MIT | https://github.com/dmonad/lib0 |
 | `long` | 5.3.2 |  | Apache-2.0 | https://github.com/dcodeIO/long.js |
+| `longest-streak` | 3.1.0 |  | MIT | https://github.com/wooorm/longest-streak |
 | `lucide-react` | 1.52.0 | `^1.52.0` | ISC | https://github.com/lucide-icons/lucide |
+| `markdown-table` | 3.0.4 |  | MIT | https://github.com/wooorm/markdown-table |
+| `mdast-util-find-and-replace` | 3.0.3 |  | MIT | https://github.com/syntax-tree/mdast-util-find-and-replace |
+| `mdast-util-from-markdown` | 2.1.0 |  | MIT | https://github.com/syntax-tree/mdast-util-from-markdown |
+| `mdast-util-gfm` | 3.1.0 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm |
+| `mdast-util-gfm-autolink-literal` | 2.0.1 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm-autolink-literal |
+| `mdast-util-gfm-footnote` | 2.1.0 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm-footnote |
+| `mdast-util-gfm-strikethrough` | 2.0.1 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm-strikethrough |
+| `mdast-util-gfm-table` | 2.0.0 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm-table |
+| `mdast-util-gfm-task-list-item` | 2.0.0 |  | MIT | https://github.com/syntax-tree/mdast-util-gfm-task-list-item |
+| `mdast-util-phrasing` | 4.1.0 |  | MIT | https://github.com/syntax-tree/mdast-util-phrasing |
+| `mdast-util-to-hast` | 13.2.1 |  | MIT | https://github.com/syntax-tree/mdast-util-to-hast |
+| `mdast-util-to-markdown` | 2.2.0 |  | MIT | https://github.com/syntax-tree/mdast-util-to-markdown |
+| `mdast-util-to-string` | 4.0.0 |  | MIT | https://github.com/syntax-tree/mdast-util-to-string |
+| `micromark` | 4.0.3 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark |
+| `micromark-core-commonmark` | 2.0.4 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-core-commonmark |
+| `micromark-extension-gfm` | 3.0.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm |
+| `micromark-extension-gfm-autolink-literal` | 2.1.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm-autolink-literal |
+| `micromark-extension-gfm-footnote` | 2.1.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm-footnote |
+| `micromark-extension-gfm-strikethrough` | 2.1.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm-strikethrough |
+| `micromark-extension-gfm-table` | 2.1.2 |  | MIT | https://github.com/micromark/micromark-extension-gfm-table |
+| `micromark-extension-gfm-task-list-item` | 2.1.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm-task-list-item |
+| `micromark-factory-destination` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-factory-destination |
+| `micromark-factory-label` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-factory-label |
+| `micromark-factory-space` | 2.1.0 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-factory-space |
+| `micromark-factory-title` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-factory-title |
+| `micromark-factory-whitespace` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-factory-whitespace |
+| `micromark-util-character` | 2.1.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-character |
+| `micromark-util-chunked` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-chunked |
+| `micromark-util-classify-character` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-classify-character |
+| `micromark-util-combine-extensions` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-combine-extensions |
+| `micromark-util-decode-numeric-character-reference` | 2.0.2 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-decode-numeric-character-reference |
+| `micromark-util-decode-string` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-decode-string |
+| `micromark-util-edit-map` | 1.0.0 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-edit-map |
+| `micromark-util-html-tag-name` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-html-tag-name |
+| `micromark-util-normalize-identifier` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-normalize-identifier |
+| `micromark-util-resolve-all` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-resolve-all |
+| `micromark-util-sanitize-uri` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-sanitize-uri |
+| `micromark-util-subtokenize` | 2.1.0 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-subtokenize |
 | `mp4-muxer` | 5.2.2 | `^5.2.2` | MIT | https://github.com/Vanilagy/mp4-muxer |
 | `onnxruntime-common` | 1.30.0 |  | MIT | https://github.com/Microsoft/onnxruntime |
 | `onnxruntime-web` | 1.30.0 | `^1.30.0` | MIT | https://github.com/Microsoft/onnxruntime |
 | `pako` | 2.2.0 |  | (MIT AND Zlib) | https://github.com/nodeca/pako |
 | `performance-now` | 2.1.0 |  | MIT | https://github.com/braveg1rl/performance-now |
 | `platform` | 1.3.6 |  | MIT | https://github.com/bestiejs/platform.js |
+| `property-information` | 7.2.0 |  | MIT | https://github.com/wooorm/property-information |
 | `protobufjs` | 7.6.6 |  | BSD-3-Clause | https://github.com/protobufjs/protobuf.js |
 | `qrcode` | 1.5.4 | `^1.5.4` | MIT | https://github.com/soldair/node-qrcode |
 | `raf` | 3.4.1 |  | MIT | https://github.com/chrisdickinson/raf |
 | `react` | 19.3.0 | `^19.2.0` | MIT | https://github.com/react/react |
 | `react-dom` | 19.3.0 | `^19.2.0` | MIT | https://github.com/react/react |
+| `react-markdown` | 10.1.0 | `^10.1.0` | MIT | https://github.com/remarkjs/react-markdown |
 | `react-router` | 7.18.4 |  | MIT | https://github.com/remix-run/react-router |
 | `react-router-dom` | 7.18.4 | `^7.13.0` | MIT | https://github.com/remix-run/react-router |
+| `remark-gfm` | 4.0.1 | `^4.0.1` | MIT | https://github.com/remarkjs/remark-gfm |
+| `remark-parse` | 11.0.0 |  | MIT | https://github.com/remarkjs/remark/tree/main/packages/remark-parse |
+| `remark-rehype` | 11.1.2 |  | MIT | https://github.com/remarkjs/remark-rehype |
 | `rgbcolor` | 1.0.1 |  | MIT OR SEE LICENSE IN FEEL-FREE.md | https://github.com/yetzt/node-rgbcolor |
 | `scheduler` | 0.28.0 |  | MIT | https://github.com/react/react |
+| `space-separated-tokens` | 2.0.2 |  | MIT | https://github.com/wooorm/space-separated-tokens |
 | `stackblur-canvas` | 2.7.0 |  | MIT | https://github.com/flozz/StackBlur |
+| `style-to-js` | 1.1.21 |  | MIT | https://github.com/remarkablemark/style-to-js |
+| `style-to-object` | 1.0.14 |  | MIT | https://github.com/remarkablemark/style-to-object |
 | `svg-pathdata` | 6.0.3 |  | MIT | https://github.com/nfroidure/svg-pathdata |
+| `trim-lines` | 3.0.1 |  | MIT | https://github.com/wooorm/trim-lines |
+| `trough` | 2.2.0 |  | MIT | https://github.com/wooorm/trough |
+| `unified` | 11.0.5 |  | MIT | https://github.com/unifiedjs/unified |
+| `unist-util-is` | 6.0.1 |  | MIT | https://github.com/syntax-tree/unist-util-is |
+| `unist-util-position` | 5.0.0 |  | MIT | https://github.com/syntax-tree/unist-util-position |
+| `unist-util-stringify-position` | 4.0.0 |  | MIT | https://github.com/syntax-tree/unist-util-stringify-position |
+| `unist-util-visit` | 5.1.0 |  | MIT | https://github.com/syntax-tree/unist-util-visit |
+| `unist-util-visit-parents` | 6.0.2 |  | MIT | https://github.com/syntax-tree/unist-util-visit-parents |
+| `vfile` | 6.0.3 |  | MIT | https://github.com/vfile/vfile |
+| `vfile-message` | 4.0.3 |  | MIT | https://github.com/vfile/vfile-message |
 | `webm-muxer` | 5.1.4 | `^5.1.4` | MIT | https://github.com/Vanilagy/webm-muxer |
 | `y-protocols` | 1.0.7 | `^1.0.7` | MIT | https://github.com/yjs/y-protocols |
 | `yjs` | 13.6.33 | `^13.6.33` | MIT | https://github.com/yjs/yjs |
@@ -130,7 +200,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@esbuild/linux-ppc64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/linux-ppc64 |
 | `@esbuild/linux-riscv64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/linux-riscv64 |
 | `@esbuild/linux-s390x-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/linux-s390x |
-| `@esbuild/linux-x64` | 0.28.2 |  | MIT | https://github.com/evanw/esbuild |
+| `@esbuild/linux-x64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/linux-x64 |
 | `@esbuild/netbsd-arm64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/netbsd-arm64 |
 | `@esbuild/netbsd-x64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/netbsd-x64 |
 | `@esbuild/openbsd-arm64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/openbsd-arm64 |
@@ -139,7 +209,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@esbuild/sunos-x64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/sunos-x64 |
 | `@esbuild/win32-arm64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/win32-arm64 |
 | `@esbuild/win32-ia32-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/win32-ia32 |
-| `@esbuild/win32-x64-*` (1 platform builds) | 0.28.2 |  | MIT | https://www.npmjs.com/package/@esbuild/win32-x64 |
+| `@esbuild/win32-x64` | 0.28.2 |  | MIT | https://github.com/evanw/esbuild |
 | `@eslint-community/eslint-utils` | 4.10.1 |  | MIT | https://github.com/eslint-community/eslint-utils |
 | `@eslint-community/regexpp` | 4.12.2 |  | MIT | https://github.com/eslint-community/regexpp |
 | `@eslint/config-array` | 0.21.2 |  | Apache-2.0 | https://github.com/eslint/rewrite |
@@ -165,7 +235,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@jridgewell/sourcemap-codec` | 1.6.0 |  | MIT | https://github.com/jridgewell/sourcemaps |
 | `@jridgewell/trace-mapping` | 0.3.31 |  | MIT | https://github.com/jridgewell/sourcemaps |
 | `@mswjs/interceptors` | 0.41.9 |  | MIT | https://github.com/mswjs/interceptors |
-| `@napi-rs/lzma-linux-x64-gnu` | 1.5.1 |  | MIT | https://github.com/Brooooooklyn/lzma |
+| `@napi-rs/lzma-*` (1 platform builds) | 1.5.1 |  | MIT | https://www.npmjs.com/package/@napi-rs/lzma-linux-x64-gnu |
 | `@open-draft/deferred-promise` | 2.2.0 |  | MIT | https://github.com/open-draft/deferred-promise |
 | `@open-draft/deferred-promise` | 3.0.0 |  | MIT | https://github.com/open-draft/deferred-promise |
 | `@open-draft/logger` | 0.3.0 |  | MIT | https://github.com/open-draft/logger |
@@ -182,8 +252,8 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@protobufjs/utf8` | 1.1.2 |  | BSD-3-Clause | https://github.com/protobufjs/protobuf.js |
 | `@rolldown/pluginutils` | 1.0.0-rc.3 |  | MIT | https://github.com/rolldown/rolldown |
 | `@rollup/rollup-*` (23 platform builds) | 4.64.0 |  | MIT | https://www.npmjs.com/package/@rollup/rollup-android-arm-eabi |
-| `@rollup/rollup-linux-x64-gnu` | 4.64.0 |  | MIT | https://github.com/rollup/rollup |
-| `@rollup/rollup-linux-x64-musl` | 4.64.0 |  | MIT | https://github.com/rollup/rollup |
+| `@rollup/rollup-win32-x64-gnu` | 4.64.0 |  | MIT | https://github.com/rollup/rollup |
+| `@rollup/rollup-win32-x64-msvc` | 4.64.0 |  | MIT | https://github.com/rollup/rollup |
 | `@testing-library/dom` | 10.4.2 |  | MIT | https://github.com/testing-library/dom-testing-library |
 | `@testing-library/jest-dom` | 6.9.1 | `^6.6.0` | MIT | https://github.com/testing-library/jest-dom |
 | `@testing-library/react` | 16.3.3 | `^16.1.0` | MIT | https://github.com/testing-library/react-testing-library |
@@ -194,10 +264,15 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@types/babel__template` | 7.4.4 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/babel__traverse` | 7.28.0 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/chai` | 5.2.3 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/debug` | 4.1.13 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/deep-eql` | 4.0.2 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/dom-webcodecs` | 0.1.19 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/estree` | 1.0.9 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/estree-jsx` | 1.0.5 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/hast` | 3.0.5 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/json-schema` | 7.0.15 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/mdast` | 4.0.4 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/ms` | 2.1.0 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/node` | 24.19.1 | `^24.10.0` | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/pako` | 2.0.4 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/qrcode` | 1.5.6 | `^1.5.6` | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
@@ -207,6 +282,8 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `@types/set-cookie-parser` | 2.4.10 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/statuses` | 2.0.6 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/trusted-types` | 2.0.7 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/unist` | 3.0.3 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| `@types/unist` | 2.0.11 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@types/wicg-file-system-access` | 2020.9.8 |  | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | `@typescript-eslint/eslint-plugin` | 8.71.0 |  | MIT | https://github.com/typescript-eslint/typescript-eslint |
 | `@typescript-eslint/parser` | 8.71.0 |  | MIT | https://github.com/typescript-eslint/typescript-eslint |
@@ -254,6 +331,10 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `canvas` | 3.2.3 | `^3.2.3` | MIT | https://github.com/Automattic/node-canvas |
 | `chai` | 5.3.3 |  | MIT | https://github.com/chaijs/chai |
 | `chalk` | 4.1.2 |  | MIT | https://github.com/chalk/chalk |
+| `character-entities` | 2.0.2 |  | MIT | https://github.com/wooorm/character-entities |
+| `character-entities-html4` | 2.1.0 |  | MIT | https://github.com/wooorm/character-entities-html4 |
+| `character-entities-legacy` | 3.0.0 |  | MIT | https://github.com/wooorm/character-entities-legacy |
+| `character-reference-invalid` | 2.0.1 |  | MIT | https://github.com/wooorm/character-reference-invalid |
 | `check-error` | 2.1.3 |  | MIT | https://github.com/chaijs/check-error |
 | `chownr` | 1.1.4 |  | ISC | https://github.com/isaacs/chownr |
 | `cli-width` | 4.1.0 |  | ISC | https://github.com/knownasilya/cli-width |
@@ -279,6 +360,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `deep-is` | 0.1.4 |  | MIT | https://www.npmjs.com/package/deep-is |
 | `dequal` | 2.0.3 |  | MIT | https://github.com/lukeed/dequal |
 | `detect-libc` | 2.1.2 |  | Apache-2.0 | https://github.com/lovell/detect-libc |
+| `devlop` | 1.1.0 |  | MIT | https://github.com/wooorm/devlop |
 | `dom-accessibility-api` | 0.6.3 |  | MIT | https://github.com/eps1lon/dom-accessibility-api |
 | `dom-accessibility-api` | 0.5.16 |  | MIT | https://github.com/eps1lon/dom-accessibility-api |
 | `electron-to-chromium` | 1.5.444 |  | ISC | https://github.com/Kilian/electron-to-chromium |
@@ -342,9 +424,13 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `indent-string` | 4.0.0 |  | MIT | https://github.com/sindresorhus/indent-string |
 | `inherits` | 2.0.4 |  | ISC | https://github.com/isaacs/inherits |
 | `ini` | 1.3.8 |  | ISC | https://github.com/isaacs/ini |
+| `is-alphabetical` | 2.0.1 |  | MIT | https://github.com/wooorm/is-alphabetical |
+| `is-alphanumerical` | 2.0.1 |  | MIT | https://github.com/wooorm/is-alphanumerical |
+| `is-decimal` | 2.0.1 |  | MIT | https://github.com/wooorm/is-decimal |
 | `is-extglob` | 2.1.1 |  | MIT | https://github.com/jonschlinkert/is-extglob |
 | `is-fullwidth-code-point` | 3.0.0 |  | MIT | https://github.com/sindresorhus/is-fullwidth-code-point |
 | `is-glob` | 4.0.3 |  | MIT | https://github.com/micromatch/is-glob |
+| `is-hexadecimal` | 2.0.1 |  | MIT | https://github.com/wooorm/is-hexadecimal |
 | `is-node-process` | 1.2.0 |  | MIT | https://github.com/mswjs/is-node-process |
 | `is-potential-custom-element-name` | 1.0.1 |  | MIT | https://github.com/mathiasbynens/is-potential-custom-element-name |
 | `isexe` | 2.0.0 |  | ISC | https://github.com/isaacs/isexe |
@@ -368,6 +454,13 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `lru-cache` | 5.1.1 |  | ISC | https://github.com/isaacs/node-lru-cache |
 | `lz-string` | 1.5.0 |  | MIT | https://github.com/pieroxy/lz-string |
 | `magic-string` | 0.30.21 |  | MIT | https://github.com/Rich-Harris/magic-string |
+| `mdast-util-mdx-expression` | 2.0.1 |  | MIT | https://github.com/syntax-tree/mdast-util-mdx-expression |
+| `mdast-util-mdx-jsx` | 3.2.0 |  | MIT | https://github.com/syntax-tree/mdast-util-mdx-jsx |
+| `mdast-util-mdxjs-esm` | 2.0.1 |  | MIT | https://github.com/syntax-tree/mdast-util-mdxjs-esm |
+| `micromark-extension-gfm-tagfilter` | 2.0.0 |  | MIT | https://github.com/micromark/micromark-extension-gfm-tagfilter |
+| `micromark-util-encode` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-encode |
+| `micromark-util-symbol` | 2.0.1 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-symbol |
+| `micromark-util-types` | 2.0.3 |  | MIT | https://github.com/micromark/micromark/tree/main/packages/micromark-util-types |
 | `mimic-response` | 3.1.0 |  | MIT | https://github.com/sindresorhus/mimic-response |
 | `min-indent` | 1.0.1 |  | MIT | https://github.com/thejameskyle/min-indent |
 | `minimatch` | 10.2.6 |  | BlueOak-1.0.0 | https://github.com/isaacs/minimatch |
@@ -393,6 +486,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `p-locate` | 4.1.0 |  | MIT | https://github.com/sindresorhus/p-locate |
 | `p-try` | 2.2.0 |  | MIT | https://github.com/sindresorhus/p-try |
 | `parent-module` | 1.0.1 |  | MIT | https://github.com/sindresorhus/parent-module |
+| `parse-entities` | 4.0.2 |  | MIT | https://github.com/wooorm/parse-entities |
 | `parse5` | 7.3.0 |  | MIT | https://github.com/inikulin/parse5 |
 | `path-exists` | 4.0.0 |  | MIT | https://github.com/sindresorhus/path-exists |
 | `path-key` | 3.1.1 |  | MIT | https://github.com/sindresorhus/path-key |
@@ -416,6 +510,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `readable-stream` | 3.6.2 |  | MIT | https://github.com/nodejs/readable-stream |
 | `redent` | 3.0.0 |  | MIT | https://github.com/sindresorhus/redent |
 | `regenerator-runtime` | 0.13.11 |  | MIT | https://github.com/facebook/regenerator/tree/main/packages/runtime |
+| `remark-stringify` | 11.0.0 |  | MIT | https://github.com/remarkjs/remark/tree/main/packages/remark-stringify |
 | `require-directory` | 2.1.1 |  | MIT | https://github.com/troygoode/node-require-directory |
 | `require-main-filename` | 2.0.0 |  | ISC | https://github.com/yargs/require-main-filename |
 | `resolve-from` | 4.0.0 |  | MIT | https://github.com/sindresorhus/resolve-from |
@@ -444,6 +539,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `strict-event-emitter` | 0.5.1 |  | MIT | https://github.com/open-draft/strict-event-emitter |
 | `string-width` | 4.2.3 |  | MIT | https://github.com/sindresorhus/string-width |
 | `string_decoder` | 1.3.0 |  | MIT | https://github.com/nodejs/string_decoder |
+| `stringify-entities` | 4.0.4 |  | MIT | https://github.com/wooorm/stringify-entities |
 | `strip-ansi` | 6.0.1 |  | MIT | https://github.com/chalk/strip-ansi |
 | `strip-indent` | 3.0.0 |  | MIT | https://github.com/sindresorhus/strip-indent |
 | `strip-json-comments` | 2.0.1 |  | MIT | https://github.com/sindresorhus/strip-json-comments |
@@ -508,6 +604,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `yocto-queue` | 0.1.0 |  | MIT | https://github.com/sindresorhus/yocto-queue |
 | `zod` | 4.6.5 |  | MIT | https://github.com/colinhacks/zod |
 | `zod-validation-error` | 4.0.2 |  | MIT | https://github.com/causaly/zod-validation-error |
+| `zwitch` | 2.0.4 |  | MIT | https://github.com/wooorm/zwitch |
 
 ## Python packages of the server runtime (`requirements.txt`)
 
@@ -516,8 +613,8 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `anyio` | 4.15.1 |  | MIT | https://github.com/agronholm/anyio |
 | `asgiref` | 3.12.1 |  | BSD-3-Clause | https://github.com/django/asgiref/ |
 | `attrs` | 26.1.0 |  | MIT | https://pypi.org/project/attrs/ |
-| `boto3` | 1.43.109 | `>=1.35` | Apache-2.0 | https://github.com/boto/boto3 |
-| `botocore` | 1.43.109 |  | Apache-2.0 | https://github.com/boto/botocore |
+| `boto3` | 1.43.111 | `>=1.35` | Apache-2.0 | https://github.com/boto/boto3 |
+| `botocore` | 1.43.111 |  | Apache-2.0 | https://github.com/boto/botocore |
 | `brotli` | 1.2.0 | `>=1.1` | MIT | https://github.com/google/brotli |
 | `certifi` | 2026.7.22 |  | MPL-2.0 | https://github.com/certifi/python-certifi |
 | `cffi` | 2.1.1 |  | MIT-0 | https://github.com/python-cffi/cffi |
@@ -543,7 +640,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `idna` | 3.20 |  | BSD-3-Clause | https://github.com/kjd/idna |
 | `inflection` | 0.5.1 |  | MIT | https://github.com/jpvanhal/inflection |
 | `jmespath` | 1.1.0 |  | MIT | https://github.com/jmespath/jmespath.py |
-| `jsonschema` | 4.26.0 |  | MIT | https://github.com/python-jsonschema/jsonschema |
+| `jsonschema` | 4.26.0 | `>=4.26` | MIT | https://github.com/python-jsonschema/jsonschema |
 | `jsonschema-specifications` | 2025.9.1 |  | MIT | https://github.com/python-jsonschema/jsonschema-specifications |
 | `msgpack` | 1.2.3 |  | Apache-2.0 | https://github.com/msgpack/msgpack-python/ |
 | `pillow` | 12.3.0 | `>=11` | MIT-CMU | https://github.com/python-pillow/Pillow |
@@ -551,10 +648,10 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `psycopg2-binary` | 2.9.13 | `>=2.9` | LGPL-3.0-or-later | https://psycopg.org/ |
 | `pyasn1` | 0.6.4 |  | BSD-2-Clause | https://github.com/pyasn1/pyasn1 |
 | `pyasn1_modules` | 0.4.2 |  | BSD-2-Clause | https://github.com/pyasn1/pyasn1-modules |
-| `pycparser` | 3.0 |  | BSD-3-Clause | https://github.com/eliben/pycparser |
+| `pycparser` | 3.11 |  | BSD-3-Clause | https://github.com/eliben/pycparser |
 | `pycrdt` | 0.14.8 | `>=0.14,<0.15` | MIT | https://github.com/y-crdt/pycrdt |
 | `pyee` | 13.0.1 |  | MIT | https://github.com/jfhbrook/pyee |
-| `pypdf` | 6.19.0 | `>=5` | BSD-3-Clause | https://github.com/py-pdf/pypdf |
+| `pypdf` | 6.20.0 | `>=5` | BSD-3-Clause | https://github.com/py-pdf/pypdf |
 | `python-dateutil` | 2.9.0.post0 |  | BSD-3-Clause OR Apache-2.0 | https://github.com/dateutil/dateutil |
 | `PyYAML` | 6.0.3 |  | MIT | https://github.com/yaml/pyyaml |
 | `redis` | 8.1.0 |  | MIT | https://github.com/redis/redis-py |
@@ -565,6 +662,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `six` | 1.17.0 |  | MIT | https://github.com/benjaminp/six |
 | `sqlparse` | 0.6.0 |  | BSD-3-Clause | https://github.com/andialbrecht/sqlparse |
 | `typing_extensions` | 4.16.0 |  | PSF-2.0 | https://github.com/python/typing_extensions |
+| `tzdata` | 2026.5 |  | Apache-2.0 | https://github.com/python/tzdata |
 | `uritemplate` | 4.2.0 |  | BSD-3-Clause OR Apache-2.0 | https://github.com/python-hyper/uritemplate |
 | `urllib3` | 2.8.0 |  | MIT | https://pypi.org/project/urllib3/ |
 | `uvicorn` | 0.54.0 | `>=0.30` | BSD-3-Clause | https://github.com/Kludex/uvicorn |
@@ -578,12 +676,13 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `autobahn` | 26.7.1 |  | MIT | https://github.com/crossbario/autobahn-python |
 | `Automat` | 25.4.16 |  | MIT | https://github.com/glyph/automat/ |
 | `cbor2` | 6.1.5 |  | MIT | https://github.com/agronholm/cbor2 |
+| `colorama` | 0.4.6 |  | BSD-3-Clause | https://github.com/tartley/colorama |
 | `constantly` | 23.10.4 |  | MIT | https://github.com/twisted/constantly |
 | `daphne` | 4.2.3 | `>=4.1` | BSD-3-Clause | https://github.com/django/daphne |
 | `factory_boy` | 3.3.3 | `>=3.3` | MIT | https://github.com/FactoryBoy/factory_boy |
-| `Faker` | 40.41.0 |  | MIT | https://github.com/joke2k/faker |
+| `Faker` | 40.43.0 |  | MIT | https://github.com/joke2k/faker |
 | `hyperlink` | 21.0.0 |  | MIT | https://github.com/python-hyper/hyperlink |
-| `hypothesis` | 6.168.5 | `>=6.100` | MPL-2.0 | https://github.com/HypothesisWorks/hypothesis |
+| `hypothesis` | 6.169.0 | `>=6.100` | MPL-2.0 | https://github.com/HypothesisWorks/hypothesis |
 | `Incremental` | 24.11.0 |  | MIT | https://github.com/twisted/incremental |
 | `iniconfig` | 2.3.1 |  | MIT | https://github.com/pytest-dev/iniconfig |
 | `packaging` | 26.3 |  | Apache-2.0 OR BSD-2-Clause | https://github.com/pypa/packaging |
@@ -592,7 +691,7 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `pyOpenSSL` | 26.4.0 |  | Apache-2.0 | https://github.com/pyca/pyopenssl |
 | `pytest` | 9.1.1 | `>=8` | MIT | https://github.com/pytest-dev/pytest |
 | `pytest-django` | 4.14.0 | `>=4.9` | BSD-3-Clause | https://github.com/pytest-dev/pytest-django |
-| `ruff` | 0.16.10 | `>=0.8` | MIT | https://github.com/astral-sh/ruff |
+| `ruff` | 0.17.0 | `>=0.8` | MIT | https://github.com/astral-sh/ruff |
 | `service-identity` | 26.1.0 |  | MIT | https://pypi.org/project/service-identity/ |
 | `sortedcontainers` | 2.4.0 |  | Apache-2.0 | http://www.grantjenks.com/docs/sortedcontainers/ |
 | `Twisted` | 26.4.0 |  | MIT | https://github.com/twisted/twisted |
@@ -600,4 +699,4 @@ Packages offering a choice of licences where Doory uses the permissive one:
 | `ujson` | 6.0.0 |  | BSD-3-Clause AND TCL | https://github.com/ultrajson/ultrajson |
 | `zope.interface` | 8.6 |  | ZPL-2.1 | https://github.com/zopefoundation/zope.interface |
 
-_Read from 488 npm packages (Node v22.22.0) and 81 Python packages (Python 3.13.16) at generation time._
+_Read from 585 npm packages (Node v22.22.1) and 83 Python packages (Python 3.12.0) at generation time._
